@@ -1,0 +1,11 @@
+# GIT Aliases
+alias push='git push'
+alias pull='git pull'
+alias add='git add -A'
+alias commit='git commit -S -m'
+alias status='git status'
+alias checkout='git checkout'
+alias merge='git merge'
+alias clean='git clean -f -d'
+alias reset='git reset --hard'
+alias nope='git reset --hard'
