@@ -152,33 +152,11 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ./create_local_config_files.sh
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     ./installs/main.sh
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     ./preferences/main.sh
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    if cmd_exists "git"; then
-
-        if [ "$(git config --get remote.origin.url)" != "$DOTFILES_ORIGIN" ]; then
-            ./initialize_git_repository.sh "$DOTFILES_ORIGIN"
-        fi
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        if ! $skipQuestions; then
-            ./update_content.sh
-        fi
-
-    fi
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     if ! $skipQuestions; then
         ./restart.sh
