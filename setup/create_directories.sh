@@ -15,6 +15,7 @@ create_directories() {
         "$HOME/Documents/development/sendbird/samples"
         "$HOME/Documents/development/sendbird/scripts"
         "$HOME/Documents/development/sendbird/soleng"
+        "$HOME/Pictures/backgrounds"
     )
 
     for i in "${DIRECTORIES[@]}"; do
