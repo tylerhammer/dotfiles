@@ -168,8 +168,6 @@ main() {
         download_utils || exit 1
     fi
 
-    . "utils.sh" || exit 1
-
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     skip_questions "$@" \
