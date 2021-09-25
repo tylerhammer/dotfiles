@@ -22,3 +22,4 @@ print_in_purple "\n • Preferences\n"
 ./finder.sh
 ./language.sh
 ./ui_and_ux.sh
+./zsh.sh
