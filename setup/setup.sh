@@ -120,11 +120,11 @@ main() {
 
     # Load utils
 
-    # if [ -x "utils.sh" ]; then
-    #     . "utils.sh" || exit 1
-    # else
-    #     download_utils || exit 1
-    # fi
+    if [ -x "utils.sh" ]; then
+        . "utils.sh" || exit 1
+    else
+        download_utils || exit 1
+    fi
 
     . "utils.sh" || exit 1
 
