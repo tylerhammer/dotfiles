@@ -10,10 +10,6 @@ install_plugin() {
     execute "code --install-extension $2" "$1 (plugin)"
 }
 
-configure_settings() {
-
-}
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 print_in_purple "\n   Visual Studio Code\n\n"                                :
@@ -24,7 +20,7 @@ brew_install "Visual Studio Code" "visual-studio-code" "--cask"
 printf "\n"
 
 # Install the VSCode plugins
-install_plugin "Bracket Pair Colorizer 2" "bracket-pair-colorizer-2"
+install_plugin "Bracket Pair Colorizer 2" "CoenraadS.bracket-pair-colorizer-2"
 install_plugin "Discord Presence" "icrawl.discord-vscode"
 install_plugin "ESLint" "dbaeumer.vscode-eslint"
 install_plugin "Material Icons" "pkief.material-icon-theme"
