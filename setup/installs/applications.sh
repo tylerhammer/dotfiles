@@ -10,6 +10,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 print_in_purple "\n   Applications via Cask\n\n"
 
+brew_install "1Password" "1password" "--cask"
+brew_install "1Password-CLI" "1password-cli" "--cask"
 brew_install "Alfred" "alfred" "--cask"
 brew_install "Discord" "discorD" "--cask"
 brew_install "Dropbox" "dorpbox" "--cask"
@@ -20,5 +22,5 @@ brew_install "Postman" "postman" "--cask"
 brew_install "Proxyman" "proxyman" "--cask"
 brew_install "Pycharm" "pycharm" "--cask"
 brew_install "Setapp" "setapp" "--cask"
-brew_insatll "Spotify" "spotify" "--cask"
+brew_install "Spotify" "spotify" "--cask"
 brew_install "Table Plus" "tableplus" "--cask"
