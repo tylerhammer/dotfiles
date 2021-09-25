@@ -11,7 +11,7 @@ install_zsh() {
   brew_install "ZSH Completions" "zsh-completions"
   brew_install "ZSH AutoSuggestions" "zsh-autosuggestions"
   brew_install "ZSH Syntax Highlighting" "zsh-syntax-highlighting"
-  chsh -s /usr/local/bin/zsh
+  
 }
 
 install_oh_my_zsh() {
