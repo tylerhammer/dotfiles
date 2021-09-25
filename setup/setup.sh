@@ -41,7 +41,7 @@ download() {
 
     return 1
 
-
+}
 
 download_dotfiles() {
 
