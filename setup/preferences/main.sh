@@ -20,5 +20,5 @@ print_in_purple "\n • Preferences\n"
 ./chrome.sh
 ./dock.sh
 ./finder.sh
-./language_and_region.sh
+./language.sh
 ./ui_and_ux.sh
