@@ -106,7 +106,7 @@ execute "defaults write -g AppleInterfaceStyle -string Dark" \
     "Enable Dark Mode"
     
 download "https://s3.us-east-1.amazonaws.com/cyanlab.io/setup/macOS/desktop_bg.JPG" "$HOME/Pictures/backgrounds/busan.jpg"
-execute "osascript -e 'tell application \"Finder\" to set desktop picture to POSIX file \"$HOME/Pictures/backgrounds/busan.jpg\"'" /
+execute "osascript -e 'tell application \"Finder\" to set desktop picture to POSIX file \"$HOME/Pictures/backgrounds/busan.jpg\"'" \
     "Set background"
 
 killall "SystemUIServer" &> /dev/null
