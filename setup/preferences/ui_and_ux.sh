@@ -75,12 +75,6 @@ execute "defaults write -g QLPanelAnimationDuration -float 0" \
 execute "defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false" \
     "Disable resume system-wide"
 
-execute "sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string 'Laptop' && \
-         sudo scutil --set ComputerName 'Tyler Hammer - Sendbird' && \
-         sudo scutil --set HostName 'Tyler Hammer - Sendbird' && \
-         sudo scutil --set LocalHostName 'Tyler Hammer - Sendbird'" \
-    "Set computer name"
-
 execute "sudo systemsetup -setrestartfreeze on" \
     "Restart automatically if the computer freezes"
 

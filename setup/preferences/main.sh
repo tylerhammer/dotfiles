@@ -17,9 +17,7 @@ print_in_purple "\n • Preferences\n"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ./app_store.sh
-./chrome.sh
 ./dock.sh
 ./finder.sh
 ./language.sh
 ./ui_and_ux.sh
-./zsh.sh

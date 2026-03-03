@@ -188,14 +188,6 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ./create_directories.sh
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    ./installs/main.sh
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     ./preferences/main.sh
 
     if ! $skipQuestions; then
