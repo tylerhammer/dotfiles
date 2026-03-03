@@ -1,0 +1,155 @@
+# ============================================================================
+# PACKAGE MANAGERS (Must be first to set up PATH)
+# ============================================================================
+# Homebrew - CRITICAL: Must run first to set up basic PATH
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# ============================================================================
+# ENVIRONMENT VARIABLES & PATH
+# ============================================================================
+# Go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
+# Python tools (uv, etc.)
+export PATH="/Users/tyler.hammer/.local/bin:$PATH"
+
+# Custom scripts
+export PATH="$HOME/Documents/development/scripts:$PATH"
+
+# FZF default command
+export FZF_DEFAULT_COMMAND="fd --type f"
+
+# Atuin environment
+. "$HOME/.atuin/bin/env"
+
+# ============================================================================
+# PROMPT & UI INITIALIZATION
+# ============================================================================
+eval "$(starship init zsh)"
+
+# ============================================================================
+# ZINIT PLUGIN MANAGER
+# ============================================================================
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [ ! -d "$ZINIT_HOME" ]; then
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+source "${ZINIT_HOME}/zinit.zsh"
+
+# ============================================================================
+# ZSH PLUGINS
+# ============================================================================
+# Load immediately (needed for prompt)
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light Aloxaf/fzf-tab
+
+# Deferred loading (turbo mode - load after prompt)
+zinit wait lucid light-mode for \
+  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zsh-users/zsh-completions \
+  atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
+
+# Command-not-found helper
+zinit wait lucid for \
+  OMZP::command-not-found
+
+# ============================================================================
+# COMPLETION SYSTEM
+# ============================================================================
+# Basic compinit
+autoload -U compinit && compinit -C
+
+# Carapace completion
+source <(carapace _carapace)
+
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+
+# fzf-tab configuration
+zstyle ':fzf-tab:*' fzf-flags --height=60% --preview-window=hidden
+zstyle ':fzf-tab:*' continuous-trigger '/'
+# Directory navigation previews
+zstyle ':fzf-tab:complete:cd:*' fzf-flags --height=60% --preview-window=right:40%:wrap
+zstyle ':fzf-tab:complete:cd:*' fzf-preview '[[ -d $realpath ]] && tree -C -L 2 $realpath 2>/dev/null || ls --color $realpath'
+# Zoxide (z command) previews
+zstyle ':fzf-tab:complete:z:*' fzf-flags --height=60% --preview-window=right:40%:wrap
+zstyle ':fzf-tab:complete:z:*' fzf-preview '[[ -d $realpath ]] && tree -C -L 2 $realpath 2>/dev/null || ls --color $realpath'
+
+# ============================================================================
+# KEYBINDINGS
+# ============================================================================
+bindkey -e
+bindkey '^[w' kill-region
+
+# ============================================================================
+# ALIASES
+# ============================================================================
+alias ls='ls -lh --color'
+alias heimdall='kubectl config use-context asgard'
+alias zz='__zoxide_zi'  # Zoxide interactive (avoids conflict with zinit's 'zi')
+
+# ============================================================================
+# FUNCTIONS
+# ============================================================================
+# Teleport helper function
+tp() {
+  action=$1
+  product=$2
+  region=$3
+  port=${4:-8000}
+  args=${@:5}
+
+  if [[ ($action = 'ssh') ]]; then
+    tsh ssh root@product=$product,app=cron,env=prod,sendbird_region=$region $args
+  fi
+
+  if [[ ($action = 'login') ]]; then
+    tsh login --proxy=sendbird-cloud.teleport.sh:443 --auth=okta_saml_connector
+  fi
+
+  if [[ ($action = 'kube')]]; then
+    tsh kube login --labels product=$product,env=prod,sbregion=$region --set-context-name $region
+  fi
+
+  if [[ ($action = 'proxy')]]; then
+    if [[ ($product = 'soda') ]]; then
+      port=8110
+    fi
+
+    if [[ ($product = 'cepext') ]]; then
+      port=8111
+    fi
+
+    if [[ ($product = 'omega') ]]; then
+      port=8112
+    fi
+
+    if [[ ($product = 'notifications') ]]; then
+      port=8113
+    fi
+
+    tsh proxy db --port $port --tunnel --labels product=mesg,app=$product,env=prod,sbregion=$region,endpoint-type=primary
+  fi
+}
+
+# ============================================================================
+# TOOL INITIALIZATION
+# ============================================================================
+eval "$(fzf --zsh)"
+eval "$(zoxide init zsh)"
+
+eval "$(atuin init zsh)"
+
+# Reload completions
+autoload -U compinit && compinit
+# bun completions
+[ -s "/Users/tyler.hammer/.bun/_bun" ] && source "/Users/tyler.hammer/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
