@@ -1,0 +1,42 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+
+# Install Homebrew packages from Brewfile
+# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+brew bundle --file={{ joinPath .chezmoi.sourceDir "Brewfile" | quote }}
+
+# --- Native installs (not available via Homebrew) ---
+
+# Atuin - shell history sync (v18.12.1)
+if ! command -v atuin &> /dev/null; then
+    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+fi
+
+# Teleport - infrastructure access (pinned to v17)
+TELEPORT_VERSION="17.7.19"
+if ! command -v tsh &> /dev/null || ! tsh version 2>/dev/null | grep -q "${TELEPORT_VERSION}"; then
+    curl -O "https://cdn.teleport.dev/teleport-${TELEPORT_VERSION}.pkg"
+    sudo installer -pkg "teleport-${TELEPORT_VERSION}.pkg" -target /
+    rm -f "teleport-${TELEPORT_VERSION}.pkg"
+fi
+
+# AWS CLI v2
+if ! command -v aws &> /dev/null; then
+    curl -o "AWSCLIV2.pkg" "https://awscli.amazonaws.com/AWSCLIV2.pkg"
+    sudo installer -pkg "AWSCLIV2.pkg" -target /
+    rm -f "AWSCLIV2.pkg"
+fi
+
+# Salesforce CLI (sf) - native .pkg installer
+if ! command -v sf &> /dev/null; then
+    curl -o "sf-arm64.pkg" "https://developer.salesforce.com/media/salesforce-cli/sf/channels/stable/sf-arm64.pkg"
+    sudo installer -pkg "sf-arm64.pkg" -target /
+    rm -f "sf-arm64.pkg"
+fi
+
+# Claude Code - native installer
+if ! command -v claude &> /dev/null; then
+    curl -fsSL https://claude.ai/install.sh | bash
+fi
+
+{{ end -}}
