@@ -104,6 +104,7 @@ defaults write -g QLPanelAnimationDuration -float 0
 defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
 sudo systemsetup -setrestartfreeze on
 defaults write -g AppleInterfaceStyle -string Dark
+defaults write -g AppleICUForce24HourTime -bool true
 
 killall "SystemUIServer" &>/dev/null
 
