@@ -1,5 +1,7 @@
 # Taps
 tap "dopplerhq/cli"
+tap "go-task/tap"
+tap "stefanlogue/tools"
 
 # CLI Tools & Utilities
 brew "bat"
@@ -15,6 +17,9 @@ brew "go"
 brew "node"
 brew "uv"
 
+# Task Runner
+brew "go-task/tap/go-task"
+
 # Infrastructure & DevOps
 brew "dopplerhq/cli/doppler"
 brew "kubernetes-cli"
@@ -22,6 +27,9 @@ brew "terraform"
 
 # Dotfile Management
 brew "chezmoi"
+
+# Development Tools
+cask "meteor"
 
 # AI Tools
 cask "codex"
